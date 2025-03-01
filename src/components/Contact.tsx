@@ -21,7 +21,7 @@ export default function Contact() {
     setHasError(false);
     
     try {
-      const response = await fetch('https://formsubmit.co/i.am.ritam.jash9@gmail.com', {
+      const response = await fetch('https://formsubmit.co/3avatarofficial@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
