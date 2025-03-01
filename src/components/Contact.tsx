@@ -1,7 +1,7 @@
+
 import { Phone, Mail, MapPin, Send } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { useForm } from '@formcarry/react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -10,17 +10,36 @@ export default function Contact() {
     phone: '',
     message: ''
   });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
-  // Replace with your actual Formcarry form ID
-  const { submit, state } = useForm({
-    id: 'Yd-Ij-Ixnl' // Your Formcarry form ID
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    await submit(formData);
-    if (state.submitted) {
-      setFormData({ name: '', email: '', phone: '', message: '' });
+    setIsSubmitting(true);
+    setHasError(false);
+    
+    try {
+      const response = await fetch('https://formsubmit.co/i.am.ritam.jash9@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      if (response.ok) {
+        setIsSubmitted(true);
+        setFormData({ name: '', email: '', phone: '', message: '' });
+      } else {
+        setHasError(true);
+      }
+    } catch (error) {
+      setHasError(true);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -114,13 +133,13 @@ export default function Contact() {
           >
             <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white text-center">Send us a Message</h3>
             
-            {state.submitted && (
+            {isSubmitted && (
               <div className="mb-6 p-4 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 rounded-lg text-center">
                 Thank you for your message! We'll get back to you soon.
               </div>
             )}
             
-            {state.error && (
+            {hasError && (
               <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg text-center">
                 Sorry, something went wrong. Please try again or contact us directly.
               </div>
@@ -140,7 +159,7 @@ export default function Contact() {
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full px-4 py-3 rounded-lg bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-all duration-200 text-gray-900 dark:text-white"
                     required
-                    disabled={state.submitting}
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div>
@@ -155,7 +174,7 @@ export default function Contact() {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full px-4 py-3 rounded-lg bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-all duration-200 text-gray-900 dark:text-white"
                     required
-                    disabled={state.submitting}
+                    disabled={isSubmitting}
                   />
                 </div>
               </div>
@@ -171,7 +190,7 @@ export default function Contact() {
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-all duration-200 text-gray-900 dark:text-white"
                   required
-                  disabled={state.submitting}
+                  disabled={isSubmitting}
                 />
               </div>
               <div>
@@ -186,17 +205,17 @@ export default function Contact() {
                   rows={4}
                   className="w-full px-4 py-3 rounded-lg bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent transition-all duration-200 text-gray-900 dark:text-white resize-none"
                   required
-                  disabled={state.submitting}
+                  disabled={isSubmitting}
                 ></textarea>
               </div>
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                disabled={state.submitting}
+                disabled={isSubmitting}
                 className="w-full px-6 py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <span>{state.submitting ? 'Sending...' : 'Send Message'}</span>
+                <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
                 <Send className="h-5 w-5" />
               </motion.button>
             </form>
