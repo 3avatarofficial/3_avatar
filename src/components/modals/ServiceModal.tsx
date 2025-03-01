@@ -109,7 +109,7 @@ export default function ServiceModal({ service, isOpen, onClose }: ServiceModalP
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden"
+            className="relative w-full max-w-4xl bg-white dark:bg-slate-800 rounded-2xl shadow-2xl overflow-hidden"
             onClick={e => e.stopPropagation()}
           >
             <button
@@ -145,7 +145,7 @@ export default function ServiceModal({ service, isOpen, onClose }: ServiceModalP
               </div>
 
               <div className="p-6 md:p-8">
-                <h4 className="text-lg font-semibold mb-4">Our Services Include:</h4>
+                <h4 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Our Services Include:</h4>
                 <div className="space-y-3">
                   {content.details.map((detail, index) => (
                     <motion.div
@@ -156,7 +156,7 @@ export default function ServiceModal({ service, isOpen, onClose }: ServiceModalP
                       className="flex items-center space-x-3"
                     >
                       <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${service.gradient}`} />
-                      <span>{detail}</span>
+                      <span className="text-gray-700 dark:text-gray-300">{detail}</span>
                     </motion.div>
                   ))}
                 </div>
