@@ -8,7 +8,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm z-50 shadow-lg dark:shadow-slate-800/20">
+    <nav className="fixed w-full bg-slate-900 backdrop-blur-sm z-50 shadow-lg shadow-slate-800/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <motion.div 
@@ -23,7 +23,7 @@ export default function Navbar() {
               <motion.a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="text-lg font-medium text-gray-700 hover:text-emerald-600 dark:text-gray-200 dark:hover:text-emerald-400 transition-colors"
+                className="text-lg font-medium text-gray-200 hover:text-emerald-400 transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -37,7 +37,7 @@ export default function Navbar() {
             <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800 transition-colors"
+              className="p-2 rounded-lg text-gray-200 hover:bg-gray-800 transition-colors"
             >
               {isOpen ? <X className="h-8 w-8" /> : <Menu className="h-8 w-8" />}
             </button>
@@ -51,14 +51,14 @@ export default function Navbar() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="md:hidden bg-white dark:bg-slate-900 border-t dark:border-gray-800"
+          className="md:hidden bg-slate-900 border-t border-gray-800"
         >
           <div className="px-4 pt-2 pb-3 space-y-2">
             {['Home', 'Services', 'About', 'Contact'].map((item) => (
               <motion.a
                 key={item}
                 href={`#${item.toLowerCase()}`}
-                className="block px-4 py-3 text-lg font-medium text-gray-700 hover:text-emerald-600 dark:text-gray-200 dark:hover:text-emerald-400 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                className="block px-4 py-3 text-lg font-medium text-gray-200 hover:text-emerald-400 rounded-lg hover:bg-gray-800 transition-colors"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setIsOpen(false)}
